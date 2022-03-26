@@ -1,0 +1,76 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Smart Data  IT Solutions &  Services Template">
+    <link href="/assets/images/logo/favicon.png" rel="icon">
+    <title>
+        <%- locals.title %>
+    </title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=Roboto:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/css/libraries.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/mobile-site.css">
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="loading">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <header class="header header-transparent">
+        <nav class="navbar navbar-expand-lg sticky-navbar">
+            <div class="container">
+
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo/logo-light.png" class="logo-light" alt="logo">
+                    <img src="/assets/images/logo/logo-dark.png" class="logo-dark" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button">
+          <span class="menu-lines"><span></span></span>
+        </button>
+                <div class="collapse navbar-collapse" id="mainNavigation">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav__item ">
+                            <a href="/" class="nav__item-link <%- locals.page_name === 'home' && 'active'  %>">Home</a>
+                        </li>
+                        <!-- /.nav-item -->
+                        <li class="nav__item ">
+                            <a href="/affiliate" class=" nav__item-link <%- locals.page_name === 'affiliate' && 'active'  %>">Affiliates</a>
+                        </li>
+                        <!-- /.nav-item -->
+                        <li class="nav__item">
+                            <a href="/vendor" class=" nav__item-link  <%-locals.page_name==='vendor' ? 'active' : '' %>">Vendors</a>
+                        </li>
+                        <!-- /.nav-item -->
+                        <li class="nav__item">
+                            <a href="/about-us" class=" nav__item-link <%- locals.page_name==='about-us' ? 'active' : '' %>">About</a>
+                        </li>
+                        <!-- /.nav-item -->
+                    </ul>
+                    <!-- /.navbar-nav -->
+                </div>
+                <!-- /.navbar-collapse -->
+                <ul class="navbar-actions list-unstyled mb-0 d-flex align-items-center">
+                    <li class="d-none d-xl-block">
+                        <a href="/register" class="btn action__btn-contact">Sign Up</a>
+                    </li>
+                    <li>
+                        <button class="action__btn action__btn-login open-login-popup">
+                            <i class="icon-user"></i><span>Login</span>
+                        </button>
+                    </li>
+                </ul>
+                <!-- /.navbar-actions -->
+            </div>
+            <!-- /.container -->
+        </nav>
+        <!-- /.navabr -->
+    </header>

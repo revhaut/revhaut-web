@@ -1,0 +1,199 @@
+@media screen and (max-width: 991px){
+	/*#signupPages{
+		padding-top: 90px;
+	}*/
+	#signup{
+		background-image: initial !important;
+		padding: 90px 5px 0 5px;
+	}
+
+	.small-padding{
+		padding: 40px 10px;
+	}
+
+	.site-bg-primary{
+		background-color: #78081a;
+	}
+
+	.site-bg-secondary{
+		background-color: #f3a712;
+	}
+
+	#signup .container-fluid{
+		padding: 0;
+	}
+
+	.btn-primary,
+	.btn-secondary{
+		width: 100%;
+	}
+
+	.affiliate-column > h2{
+		font-size: 24px;
+	}
+
+	#subscribeDark h2{
+		font-size: 16px;
+	}
+
+	#subscribeDark{
+		padding: 30px 35px;
+	}
+
+	#subscribeDark .form-row {
+	  margin-right: -5px;
+	  margin-left: -5px;
+	}
+
+	.form-group{
+		margin-bottom: 0;
+	}
+
+	.bg-section{
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+
+	#affiliate h2{
+		font-size: 19px !important;
+		margin-top: 18px;
+	}
+
+	#affiliate .btn{
+		margin-bottom: 20px;
+	}
+
+	#secondSection h2{
+		font-size: 19px;
+	}
+	.aff-column {
+	   margin-bottom: 20px;
+	}
+
+	.heading-25 {
+	    font-size: 18px;
+	}
+
+	#faqAffiliates .hide-faq{
+		display: none !important;
+	}
+
+	.remove-padding{
+		padding: 0 !important;
+	}
+
+	.img-fluid{
+		width: 100%;
+		height: auto;
+	}
+
+	.mobile-width{
+		width: 100% !important;
+	}
+
+	.post-container{
+		margin-top: 10px;
+		padding-right: 10px !important;
+		padding-left: 10px !important;
+		padding-bottom: 10px !important;
+	}
+
+	.post-container .meta {
+	    font-size: 8px;
+	    margin-bottom: 5px;
+	}
+
+
+	#affiliate .list-post h2{
+		font-size: 13px !important;
+		margin: 12px 0 !important;
+	}
+
+	.post-container .meta .meta-cat {
+	    color: #78081A;
+	    font-size: 6px !important;
+	}
+
+	.post-container p {
+	    color: #fff !important;
+	    font-size: 9px;
+	}
+
+	.author-content h6{
+		font-size: 10px;
+		margin-bottom: 9px;
+	}
+
+	.post-list-meta{
+		font-size: 9px;
+		margin-bottom: 3px;
+	}
+
+	.post-list-title {
+	    font-size: 14px;
+	    margin: 8px 0;
+	}
+
+	#postList{
+		padding: 5px 10px;
+	}
+
+	#postList .nav-item .nav-link{
+	    font-size: 8px;
+	}
+
+	.post-list-title + p{
+		font-size: 10px !important;
+	}
+
+	#postList .author-content h6, #postList .author-content p {
+	    margin: 5px 3px;
+	    font-size: 10px;
+	}
+
+	.post-list-img-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	    width: 300px;
+	    height: 200px;
+	    padding: 5px;
+	}
+
+	.post-list-img-container > img{
+		width: 100%;
+		height: auto;
+	}
+
+	.list-post{
+		padding-left: 5px !important;
+	}
+
+	#postList .row {
+	    padding: 10px 8px;
+	    margin: 10px 0;
+	}
+
+	#postList div[class^="col-"] {
+	    padding: 6px;
+	}
+
+	.share{
+		color: #fff !important;
+	}
+
+	.share-icon a{
+		color: #fff !important;
+	}
+
+	.share-icon a i{
+		color: #fff !important;
+		text-decoration: none;
+	}
+
+	#affiliatePage .single{
+	  padding-top: 140px !important;
+	}
+
+
+}

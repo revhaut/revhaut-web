@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Smart Data  IT Solutions &  Services Template">
+    <link href="/admin/assets/images/logo/favicon.png" rel="icon">
+    <title>Revhaut &#8211; Start &amp; Scale Your 7figure Online Business</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/admin/assets/css/libraries.css">
+    <link rel="stylesheet" href="/admin/assets/css/style.css">
+    <link rel="stylesheet" href="/admin/assets/css/custom.css">
+    <link rel="stylesheet" href="/admin/assets/css/mobile-custom.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="preloader">
+            <div class="sk-cube-grid">
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+                <span class="sk-cube"></span>
+            </div>
+        </div>
+        <header class="header header-light header-light-has-topbar">
+            <nav class="navbar navbar-expand-lg sticky-navbar">
+                <div class="container">
+                    <a class="navbar-brand mr-5" href="/index.php">
+                        <img src="/admin/assets/images/logo/logo-light.png" class="logo-light" alt="logo">
+                        <img src="/admin/assets/images/logo/logo-dark.png" class="logo-dark" alt="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button">
+                        <span class="menu-lines"><span></span></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNavigation">
+                        <ul class="navbar-nav">
+                            <li class="nav__item">
+                                <a href="/affiliate/dashboard" class="nav__item-link <%- locals.page == 'Dashboard' && 'active'  %>">Dashboard</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+
+                                <a href="/affiliate/market-places" class="nav__item-link <%- locals.page == 'Marketplace' && 'active'  %>">Product Marketplace</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="/affiliate/affiliate-sales" class="nav__item-link <%- locals.page == 'Sale' && 'active'  %>">Affiliate Sales</a>
+                            </li>
+                            <!-- /.nav-item -->
+                            <li class="nav__item">
+                                <a href="/affiliate/transactions " class="nav__item-link <%- locals.page == 'Transaction' && 'active'  %>">Transaction</a>
+                            </li>
+
+                        </ul>
+                        <!-- /.navbar-nav -->
+                    </div>
+                    <!-- /.navbar-collapse -->
+                    <ul class="navbar-actions list-unstyled mb-0 d-flex align-items-center ">
+                        <li class="nav__item ">
+                            <a href="# " class="nav__item-link img-rounded-div ">
+                                <img src="/admin/assets/images/blog/author/1.jpg " class="img-fluid rounded-circle ">
+                            </a>
+                        </li>
+                        <!-- /.nav-item -->
+                        <li class="nav__item has-dropdown ">
+                            <span class="d-flex header-dropdown ">
+                                <a href="# "  class="dropdown-toggle nav__item-link " data-toggle="dropdown ">John Doe</a>
+                                <i class="fa fa-caret-down " aria-hidden="true "></i>
+                            </span>
+                            <ul class="dropdown-menu ">
+                                <li class="nav__item ">
+                                    <a href="# " class="nav__item-link ">Dropdown 1</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <%- body %>
+    </div>
+    <script src="/admin/assets/js/jquery-3.5.1.min.js "></script>
+    <script src="/admin/assets/js/plugins.js "></script>
+    <script src="/admin/assets/js/main.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js "></script>
+    <script>
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+    </script>
+    <script>
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+
+</body>
+
+</html>
