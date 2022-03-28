@@ -53,10 +53,6 @@ function onError(error) {
 function onListening() {
     var addr = server.address();
     var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-    console.log(
-        `Server started http://localhost:${addr.port} on env ${
-			process.env.NODE_ENV || 'dev'
-		}`
-    );
+    console.log(`Server started http://localhost:${addr.port} on env ${process.env.NODE_ENV || 'dev'}`);
     debug('Listening on ' + bind);
 }
