@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./src/server.js",
-        "dev": "nodemon node ./src/server.js",
+        "dev": "nodemon",
         "build": "",
         "mg:up": "npx knex migrate:latest",
         "mg:down": "npx knex migrate:rollback",

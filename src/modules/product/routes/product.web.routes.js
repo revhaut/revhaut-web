@@ -5,6 +5,5 @@ const productRoutes = express.Router();
 
 productRoutes.get('/create', productController.productWeb);
 productRoutes.get('/list', productController.productListWeb);
-productRoutes.use(marketPlaceRoute)
-
+productRoutes.use('/',marketPlaceRoute)
 module.exports=productRoutes;

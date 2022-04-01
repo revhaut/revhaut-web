@@ -1,7 +1,6 @@
 const HttpStatusCode = require('../../shared/utils/response-formatter.util');
 const userSchema = require('../user/schema/user.schema');
 const schemaValidator = require('../../shared/utils/schema-validator.util');
-const UserService = require('./user.service');
 
 class ProductController {
 
@@ -37,7 +36,7 @@ class ProductController {
               return HttpStatusCode.INVALID_REQUEST({ response, errors });
           }
 
-          const { data: result, message } = await UserService.register(data);
+          //const { data: result, message } = await UserService.register(data);
           //await emailService.sendVericationMail(authData);
           return HttpStatusCode.CREATED({ response, message, data: result });
       } catch (error) {
@@ -57,7 +56,7 @@ class ProductController {
                 return HttpStatusCode.INVALID_REQUEST({ response, errors });
             }
 
-            const { data: result, message } = await UserService.register(data);
+            //const { data: result, message } = await UserService.register(data);
             //await emailService.sendVericationMail(authData);
             return HttpStatusCode.CREATED({ response, message, data: result });
         } catch (error) {
