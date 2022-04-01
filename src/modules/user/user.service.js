@@ -8,7 +8,6 @@ const dayjs = require('dayjs');
 class UserService {
     async register(requestData) {
         const { email, user_type } = requestData;
-
         const destination = 'verification';
         if (user_type == UserType.VENDOR.value) {
             return await this.registrationVendor(requestData);
@@ -101,7 +100,7 @@ class UserService {
         return await sharedService.queryHandler(userRepository.findFirst({ email }));
     }
 
-    verifyToken({ token, email_token }) {
+    async verifyToken({ token, email_token }) {
         let is_success = false;
         const difference = dayjs.duration(dayjs().diff(dayjs(email_token.createdAt)));
         if (difference.asHours() < config.tokenLife) {
@@ -127,7 +126,7 @@ class UserService {
             ({ data } =
                 type == password_reset ?
                 await this.sharedService.queryHandler(userRepository.findFirst({ where: { email } })) :
-                await this.sharedService.queryHandler(userRepository.findUnique({ where: { id } })));
+                await this.sharedService.queryHandler(userRepository.findFirst({ where: { id } })));
             if (!data) {
                 throw new RNBadRequestException({
                     message: translate(translatekey.USER_NOT_FOUND),
@@ -148,7 +147,7 @@ class UserService {
             return { is_success: true, data: resp };
         }
         data = { email_token: token };
-        this.sharedService.queryHandler(userRepository.update({ where: { id }, data }));
+        this.sharedService.queryHandler(userRepository.update({ id }, {data} ));
         return { is_success: true, data: resp };
     }
 
