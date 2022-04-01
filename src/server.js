@@ -1,8 +1,9 @@
 const application = require('../src/app');
 const debug = require('debug')('revhaut-app:server');
 const http = require('http');
-const dotenv = require('dotenv').config();
+// dotenv = require('dotenv').config();
 const express = require('express');
+require('dotenv').config();
 
 const app = express();
 application(app);

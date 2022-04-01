@@ -1,20 +1,21 @@
-import Joi from 'joi';
-import { emailSchema } from '../../../../src/shared/schemas';
+const Joi = require('joi');
+const Schema = require('../../../shared/schemas');
 
 const accountSchema = {
     createAccountSchema: Joi.object({
         first_name: Joi.string().required().trim().label('Firstname'),
         last_name: Joi.string().required().trim().label('Lastname'),
-        email: emailSchema.required().label('Email'),
+        email: Schema.emailSchema.required().label('Email'),
+        phone: Joi.string().required().label('Password'),
         password: Joi.string().required().label('Password'),
-        role_id: Joi.string().required().trim().label('Role'),
-        country_id: Joi.string().required().trim().label('Country'),
+        user_type: Joi.string().required().label('Password'),
+        state: Joi.string().required().trim().label('Country'),
+        country: Joi.string().required().trim().label('Country'),
     }),
-    accountVerification: Joi.object({
-        email: emailSchema.required().label('email'),
-        token: Joi.string().required().trim().label('token'),
-    }),
+    // accountVerification: Joi.object({
+    //     email: emailSchema.required().label('email'),
+    //     token: Joi.string().required().trim().label('token'),
+    // }),
 };
-8
 
-export { accountSchema };
+module.exports = accountSchema;

@@ -1,7 +1,7 @@
 const accountRepository = require('../account.repository');
 const VerifyUserAccount = require('../dtos/account.dto');
 
-const verifyUserAccount = async(data) => {
+const verifyUserAccount = async data => {
     const { email, token } = data;
     const isAccountExisting = await accountRepository.findFirst({
         where: {

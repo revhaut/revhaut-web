@@ -1,7 +1,7 @@
 var express = require('express');
 
 const defaultController = require('./default.controller');
-const authController = require('../auth/auth.controller');
+const userController = require('../user/user.controller');
 const defaultRoutes = express.Router();
 
 defaultRoutes.get('/', defaultController.homeController);
@@ -10,8 +10,7 @@ defaultRoutes.get('/terms-conditions', defaultController.contactController);
 defaultRoutes.get('/privacy-policy', defaultController.privacyController);
 defaultRoutes.get('/affiliate', defaultController.affiliateController);
 defaultRoutes.get('/vendor', defaultController.vendoreController);
-defaultRoutes.get('/register', authController.registerWeb);
-defaultRoutes.get('/register/vendor', authController.vendorRegisterWeb);
-defaultRoutes.get('/register/affiliate', authController.affiliateRegisterWeb);
+defaultRoutes.get('/register', userController.registerWeb);
+defaultRoutes.get('/account/register', userController.registerAccountWeb);
 
 module.exports = defaultRoutes;
