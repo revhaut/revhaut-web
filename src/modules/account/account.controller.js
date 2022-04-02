@@ -5,7 +5,7 @@ const accountService = require('./services');
 const passwordUtil = require('../../shared/utils/generate-password');
 const AccountService = require('../account/account.service');
 class AccountController {
-    async register(request, response) {
+    async resetPasswordWeb(request, response) {
         const { body } = request;
         try {
             const { errors, data } = schemaValidator(accountSchema.createAccountSchema, {
@@ -16,7 +16,6 @@ class AccountController {
             }
             data.password = passwordUtil.hashPassword(data.password);
             const { data: result, message } = await AccountService.create(data);
-            //await emailService.sendVericationMail(authData);
             return HttpStatusCode.CREATED({ response, message, data: result });
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
@@ -25,7 +24,14 @@ class AccountController {
             });
         }
     }
-    async verifyUserAccount(request, response) {
+    async verifyAccountWeb(request, response) {}
+    async becomeVendorOrAffiliateWeb(request, response) {}
+    async registerWeb(request, response) {}
+    async LoginWeb(request, response) {}
+    async LogOut(request, response) {}
+
+    // ########==API-ROUTE==########
+    async verifyAccountApi(request, response) {
         try {
             const { query } = request;
             const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
@@ -41,11 +47,15 @@ class AccountController {
             });
         }
     }
-    async fetchUserAccounts(request, response) {
-        const { query } = request;
+    async resetPasswordApi(request, response) {
         try {
-            const { accountData, message } = await accountService.fetchUserAccounts(query);
-            return HttpStatusCode.SUCCESS({ res, data: accountData, message });
+            const { query } = request;
+            const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ res, errors });
+            }
+            const { authData } = await accountService.verifyUserAccount(data);
+            res.send(authData);
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
@@ -53,9 +63,54 @@ class AccountController {
             });
         }
     }
-
-    async vendore() {}
-    async affiliate() {}
+    async loginApi(request, response) {
+        try {
+            const { query } = request;
+            const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ res, errors });
+            }
+            const { authData } = await accountService.verifyUserAccount(data);
+            res.send(authData);
+        } catch (error) {
+            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                response,
+                message: error.message,
+            });
+        }
+    }
+    async RegisterApi(request, response) {
+        try {
+            const { query } = request;
+            const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ res, errors });
+            }
+            const { authData } = await accountService.verifyUserAccount(data);
+            res.send(authData);
+        } catch (error) {
+            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                response,
+                message: error.message,
+            });
+        }
+    }
+    async verifyAccountApi(request, response) {
+        try {
+            const { query } = request;
+            const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ res, errors });
+            }
+            const { authData } = await accountService.verifyUserAccount(data);
+            res.send(authData);
+        } catch (error) {
+            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                response,
+                message: error.message,
+            });
+        }
+    }
 }
 
 module.exports = new AccountController();

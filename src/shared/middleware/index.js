@@ -15,8 +15,7 @@ const middleWare = app => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
-    app.use(cookieParser())
-    app.use(csrf({ cookie: true }))
+    //app.use(csrf({ cookie: true }))
     webRoute(app);
     apiRoute(app);
 

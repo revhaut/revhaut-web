@@ -9,7 +9,6 @@ class UserController {
     async registerWeb(request, response) {
         const locals = {
             title: 'register',
-            scripts: ['<script src="/vendors/editor/farmingDetails.js"></script>'],
         };
         return response.render('auth/register', {
             layout: '_layouts/default',
@@ -67,8 +66,8 @@ class UserController {
             if (errors) {
                 return HttpStatusCode.INVALID_REQUEST({ res, errors });
             }
-            data.password = passwordUtil.hashPassword(data.password);
-            const { data: result, message } = await AccountService.create(data);
+
+            const { data: result, message } = await UserService.register(data);
             //await emailService.sendVericationMail(authData);
             return HttpStatusCode.CREATED({ response, message, data: result });
         } catch (error) {

@@ -7,15 +7,14 @@ exports.up = function(knex) {
     table.uuid('id').unique().notNullable().defaultTo(knex.raw('gen_random_uuid()')).primary({
         constraintName: `sale_pages_id`,
     });
-    table.string('product_id').notNull();
-    table.string('user_id').notNull();
-    table.text('content').notNull();
+    table.uuid('product_id').notNull();
+    table.uuid('user_id').notNull();
     table.uuid('vendor_id').notNull();
-    table.foreign('product_id').references('id').inTable('products');
-    table.boolean('is_publish').defaultTo(false);
-    table.boolean('is_deleted').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
+    table.foreign('user_id').references('id').inTable('users');
+    table.foreign('product_id').references('id').inTable('products');
+    table.foreign('vendor_id').references('id').inTable('users');
   });
 };
 

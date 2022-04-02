@@ -9,7 +9,6 @@ exports.up = function(knex) {
         });
         table.uuid('user_id').notNull();
         table.foreign('user_id').references('id').inTable('users');
-        table.boolean('security_2fa').defaultTo(false);
         table.boolean('language_default').defaultTo('en');
         table.boolean('payment_autopay').defaultTo(false);
         table.string('payment_fund_source').notNull(); //fiat,usdt

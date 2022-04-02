@@ -13,6 +13,7 @@ exports.up = function(knex) {
         table.string('email').notNull();
         table.string('phone').notNull();
         table.string('password').notNull();
+        table.json('pin').nullable()
         table.string('revhaut_tag').nullable();
         table.string('referal_code').nullable();
         table.json('addresses').nullable();

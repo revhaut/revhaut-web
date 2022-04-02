@@ -7,17 +7,38 @@ const dayjs = require('dayjs');
 
 class UserService {
     async register(requestData) {
-        const { email, user_type } = requestData;
-        const destination = 'verification';
-        if (user_type == UserType.VENDOR.value) {
-            return await this.registrationVendor(requestData);
-        } else if (stage === 2) {
-            return await this.registrationStageTwo({
-                id,
-                token,
-                destination,
+        const { email, password, first_name, last_name, user_type } = requestData;
+        const { data: user_exist } = await this.userExist(email);
+        if (user_exist) {
+            throw new BadRequestException({
+                message: translate(translatekey.ACT_EMAIL_EXIST),
             });
         }
+        const hashedPassword = await sharedService.hashPassword(password);
+        const token = { token: sharedService.generateToken(), createdAt: dayjs().format() };
+        const revhaut_tag = await sharedService.generateRaenestTag(first_name, last_name);
+        const data = {
+            ...requestData,
+            email: email.trim().toLowerCase(),
+            email_token: token,
+            password: hashedPassword,
+            revhaut_tag,
+        };
+        const { data: newUser } = await sharedService.queryHandler(userRepository.create( data ));
+        // create user wallet
+
+        
+
+
+
+
+        if (user_type == UserType.VENDOR.value) {
+            return await this.registrationVendor(requestData);
+        }
+        else if (user_type == UserType.AFFILIATE.value) {
+
+        }
+        // return to controller
     }
 
     async sendEmailToken({ email, first_name, last_name, type, id = '' }) {
@@ -235,13 +256,14 @@ class UserService {
             revhaut_tag,
         };
         const { data: user } = await sharedService.queryHandler(userRepository.create( data ));
+        // create user wallet
 
         // send email
 
         const emailData = {
             from: `${emailConfig.postmark.senderEmail}`,
             to: email,
-            subject: 'Account Details Verification',
+            subject: 'Account Verification',
             template_id: `${[emailConfig.postmark.templates.registrationVerification]}`,
             dynamic_data: {
             firstname: first_name,
@@ -252,6 +274,7 @@ class UserService {
         const {is_success} = await sendEmail({ params: emailData });
         if(!is_success){
             // error sending activation code
+            // s
         }
 
         return {
@@ -261,29 +284,22 @@ class UserService {
             dashboard: { user: { id: user.id } },
         };
     }
-    async registrationAffiliate({ id, token, destination }) {
-        const { data: user } = await this.sharedService.queryHandler(userRepository.findUnique({ where: { id } }));
-        if (!user)
-            throw new RNBadRequestException({
-                message: translate(translatekey.USER_NOT_FOUND),
-            });
-        const tokenValid = await this.sharedService.verifyToken({
-            token,
-            email_token: user.email_token,
-        });
-        if (!tokenValid)
+    async registrationAffiliate(data) {
+        const { email, password, first_name, last_name } = data;
+        const { data: user_exist } = await this.userExist(email);
+        if (user_exist){
             throw new RNBadRequestException({
                 message: translate(translatekey.WRONG_CONFIRM_CODE),
             });
-        const email_confirm = true;
-            email_token = { token: 0, createdAt: dayjs().format() };
-        const kyc_level = user.membership_type === UserType.EMPLOYEE ? KycLevel.LEVEL_ONE : KycLevel.LEVEL_TWO;
-        const data = { email_confirm, email_token, kyc_level };
-        await this.sharedService.queryHandler(userRepository.update({ where: { id }, data }));
+        }
 
-        destination = 'dashboard';
-        const message = translate(translatekey.ACT_LOGIN_SUCCESS);
-        const dashboard = await this.loadDashboard(user);
+        // const email_confirm = true;
+        // email_token = { token: 0, createdAt: dayjs().format() };
+        // await this.sharedService.queryHandler(userRepository.update({ where: { id }, data }));
+
+        // destination = 'dashboard';
+        // const message = translate(translatekey.ACT_LOGIN_SUCCESS);
+        // const dashboard = await this.loadDashboard(user);
         return {
             is_success: true,
             destination,

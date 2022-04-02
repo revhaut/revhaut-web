@@ -16,14 +16,14 @@ exports.up = function(knex) {
     table.decimal('product_amount');
     table.uuid('category_id').notNull();
     table.uuid('vendor_id').notNull();
-    table.foreign('category_id').references('id').inTable('categories');
-    table.foreign('vendor_id').references('id').inTable('users');
     table.string('product_ref').notNull();
     table.string('product_slug').notNull();
     table.boolean('is_publish').defaultTo(false);
     table.boolean('is_deleted').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
+    table.foreign('category_id').references('id').inTable('categories');
+    table.foreign('vendor_id').references('id').inTable('users');
   });
 };
 
