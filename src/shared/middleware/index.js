@@ -5,8 +5,9 @@ const logger = require('morgan');
 const webRoute = require('../routes/web.routes');
 const apiRoute = require('../routes/api.routes');
 const expressLayouts = require('express-ejs-layouts');
-const csrf = require('csurf')
+const csrf = require('csurf');
 const middleWare = app => {
+<<<<<<< HEAD
     app.use(expressLayouts);
     app.use('/', express.static(path.join(__dirname, '../../public')));
     app.set('views', path.join(__dirname, '../../views'));
@@ -19,7 +20,9 @@ const middleWare = app => {
     apiRoute(app);
     webRoute(app);
 
-    // catch 404 and forward to error handler
+
+
+  // catch 404 and forward to error handler
 };
 
 module.exports = middleWare;
