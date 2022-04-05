@@ -15,9 +15,9 @@ const middleWare = app => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
-    //app.use(csrf({ cookie: true }))
-    webRoute(app);
+    app.use(csrf({ cookie: true }))
     apiRoute(app);
+    webRoute(app);
 
     // catch 404 and forward to error handler
 };

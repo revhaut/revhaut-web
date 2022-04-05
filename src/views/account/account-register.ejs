@@ -1,4 +1,4 @@
-<section class="bg-light dashboard-padding auth">
+<section class="bg-light dashboard-padding account">
     <div class="d-flex justify-content-center align-items-center">
         <a href="/">
             <img src="/assets/images/logo/logo-dark.png" class="img-fluid">
@@ -7,92 +7,90 @@
     <div class="container">
         <div class="row no-gutters">
             <div class="col-md-7 p-4 bg-white left-curve">
-                <h5>Sign-up</h5>
-                <p>Start your journey with Revhaut </p>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label for="labelFullName">first name</label>
-                            <input type="text" class="form-control firstname" placeholder="first name">
+                <div class="account-wrapper">
+                    <h5>Sign-up</h5>
+                    <p>Start your journey with Revhaut </p>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label for="labelFullName">first name</label>
+                                <input type="text" class="form-control firstname" placeholder="first name">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="labelFullName">last name</label>
+                                <input type="text" class="form-control lastname" placeholder="last name">
+                            </div>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label for="labelFullName">last name</label>
-                            <input type="text" class="form-control lastname" placeholder="last name">
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label for="labelFullName">email</label>
+                                <input type="email" class="form-control email" placeholder="email">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="labelFullName">phone</label>
+                                <input type="text" class="form-control phone" placeholder="phone number">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label for="labelFullName">email</label>
-                            <input type="email" class="form-control email" placeholder="email">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="labelFullName">phone</label>
-                            <input type="text" class="form-control phone" placeholder="phone number">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label for="labelCountry">country</label>
-                            <select class="form-control country">
-                                <option value="Nigeria">Nigeria</option>
-                                <option value="Ghana">Ghana</option>
-                                <option value="Cameroun">Cameroun</option>
-                                <option value="" selected>Select Country</option>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label for="labelCountry">country</label>
+
+                                <select class="form-control _country">
+                                <option data-display="Select">Select Country</option>
+                                <% locals.countries.forEach(function(country) { %>
+                                   <option value="<%=country.isoCode%>"><%=country.name%></option>
+                                 <% }); %>
                             </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="labelState">state</label>
+                                <select class="form-control state"></select>
+                            </div>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label for="labelState">state</label>
-                            <select class="form-control state">
-                                <option value="Nigeria">Lagos</option>
-                                <option value="Abia">Abia</option>
-                                <option value="Bauchi">Bauchi</option>
-                                <option value="" selected>Select State</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label for="passLabel">Password</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control password" placeholder="enter password">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <a href="#">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </a>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label for="passLabel">Password</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control password" placeholder="enter password">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <a href="#">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="passLabel"> confirm password</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control confirm-password" placeholder="confirm password">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <a href="#">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label for="passLabel"> confirm password</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control confirm-password" placeholder="confirm password">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <a href="#">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="labelState">User </label>
-                        <select class="form-control user-type" id="labelState">
+                        <div class="form-group">
+                            <label for="labelState">User </label>
+                            <select class="form-control user-type" id="labelState">
                             <option value="">Select your role</option>
                             <option value="vendor">Vendor</option>
                             <option value="affiliate">affiliate</option>
                           </select>
-                    </div>
-                    <button type="submit" name="" class="btn mb-4 btn-secondary btn-block create-account">Create Account</button>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <p>
-                            Already have an account? <a href="#" class="text-secondary">Login</a>
-                        </p>
-                    </div>
-                </form>
+                        </div>
+                        <button type="submit" name="" class="btn mb-4 btn-secondary btn-block create-account">Create Account</button>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p>
+                                Already have an account? <a href="/login" class="text-secondary">Login</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="col-md-7 p-4 bg-white left-curve payment-info">
                 <h5>Affiliate Sign-up</h5>
@@ -121,12 +119,7 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label for="labelCountry">Country</label>
-                            <select class="form-control" id="labelCountry">
-                          <option value="Nigeria">Nigeria</option>
-                          <option value="Ghana">Ghana</option>
-                          <option value="Cameroun">Cameroun</option>
-                          <option value="" selected>Select Country</option>
-                        </select>
+                            <select class="form-control" id="labelCountry"></select>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="labelState">State</label>
@@ -154,7 +147,7 @@
                     <input type="submit" name="" class="btn mb-4 btn-secondary btn-block" value="Create Account">
                     <div class="d-flex justify-content-center align-items-center">
                         <p>
-                            Already have an account? <a href="#" class="text-secondary">Login</a>
+                            Already have an account? <a href="/login" class="text-secondary">Login</a>
                         </p>
                     </div>
                 </form>
@@ -182,7 +175,6 @@
                                     Designed for affiliate marketers by affiliate marketers
                                 </h5>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -1,33 +1,424 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Email Verification</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+        
+        @font-face {
+            font-family: "Graphik";
+            src: url("https://api.pace.africa/files/font/GraphikRegular.otf");
+            font-weight: 400;
+            font-style: normal;
+            font-stretch: normal;
+        }
+        
+        @font-face {
+            font-family: "GraphikMedium";
+            src: url("https://api.pace.africa/files/font/GraphikMedium.otf");
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+        }
+        /* Prevent WebKit and Windows mobile changing default text sizes */
+        /* Allow smoother rendering of resized image in Internet Explorer */
+        /* iOS BLUE LINKS */
+        
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        /* MOBILE STYLES */
+        
+        @media screen and (max-width: 525px) {
+            .container {
+                margin-top: 0 !important;
+            }
+            .wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            /* ADJUSTS LAYOUT OF LOGO IMAGE */
+            .logo img {
+                margin: 0 auto !important;
+            }
+            /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+            .mobile-hide {
+                display: none !important;
+            }
+            .img-max {
+                max-width: 100% !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+            /* FULL-WIDTH TABLES */
+            .responsive-table {
+                width: 100% !important;
+            }
+            .padding {
+                padding: 10px 5% 15px 5% !important;
+            }
+            .padding-meta {
+                padding: 30px 5% 0px 5% !important;
+                text-align: center;
+            }
+            .no-padding {
+                padding: 0 !important;
+            }
+            .section-padding {
+                padding: 20px 15px 20px 15px !important;
+            }
+            /* ADJUST BUTTONS ON MOBILE */
+            .mobile-button-container {
+                margin: 0 auto;
+                width: 100% !important;
+            }
+            .mobile-button {
+                padding: 15px !important;
+                border: 0 !important;
+                font-size: 16px !important;
+                display: block !important;
+            }
+        }
+        /* ANDROID CENTER FIX */
+    </style>
 </head>
 
-<body>
-    <h1>Smartech</h1>
-</body>
-<script src='//cdnt.netcoresmartech.com/smartechclient.js'></script>
+<body style="
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: #e5e5e5;
+      color: #000000;
+    ">
+    <table border="#ffffff" bgcolor="#ffffff" cellpadding="0" cellspacing="0" style="
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        border: none;
+        border-collapse: collapse !important;
+        margin-top: 30px !important;
+        margin: auto;
+      " class="container">
+        <tr style="border: none; border-color: #ffffff;">
+            <td align="center" style="
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+            border: none;
+            padding: 30px 0 0 0;
+            background-color: #ffffff;
+          " class="section-padding">
+                <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+              <tr>
+                <td align="center" valign="top" width="500">
+          <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="
+              -webkit-text-size-adjust: 100%;
+              -ms-text-size-adjust: 100%;
+              font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+              mso-table-lspace: 0pt;
+              mso-table-rspace: 0pt;
+              border: none;
+              border-collapse: collapse !important;
+              max-width: 651px;
+            " class="wrapper">
+                    <tr style="border: none; border-color: #ffffff;">
+                        <td align="left" valign="top" class="logo" style="
+                  -webkit-text-size-adjust: 100%;
+                  -ms-text-size-adjust: 100%;
+                  font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                  mso-table-lspace: 0pt;
+                  mso-table-rspace: 0pt;
+                  border: none;
+                ">
+                            <a href="/" target="_blank" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                  ">
+                                <img alt="Logo" title="Logo" src="/assets/images/logo/logo-light.png" width="80" height="44.44" border="0" style="
+                      -ms-interpolation-mode: bicubic;
+                      border: 0;
+                      height: auto;
+                      line-height: 100%;
+                      outline: none;
+                      text-decoration: none;
+                    " />
+                            </a>
+                            <br />
+                            <hr style="border: 0.6px solid #e6e6e6;" />
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+      </table>
+          <![endif]-->
+            </td>
+        </tr>
+        <tr style="border: none; border-color: #ffffff;">
+            <td bgcolor="#ffffff" align="center" style="
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+            border: none;
+            padding: 20px;
+          " class="section-padding">
+                <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+              <tr>
+                <td align="center" valign="top" width="500">
+          <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="
+              -webkit-text-size-adjust: 100%;
+              -ms-text-size-adjust: 100%;
+              font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+              mso-table-lspace: 0pt;
+              mso-table-rspace: 0pt;
+              border: none;
+              border-collapse: collapse !important;
+              max-width: 651px;
+            " class="responsive-table">
+                    <tr style="border: none; border-color: #ffffff;">
+                        <td style="
+                  -webkit-text-size-adjust: 100%;
+                  -ms-text-size-adjust: 100%;
+                  font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                  mso-table-lspace: 0pt;
+                  mso-table-rspace: 0pt;
+                  border: none;
+                ">
+                            <!-- HERO IMAGE -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                    mso-table-lspace: 0pt;
+                    mso-table-rspace: 0pt;
+                    border: none;
+                    border-collapse: collapse !important;
+                  ">
+                                <tr style="border: none; border-color: #ffffff;">
+                                    <td align="center" style="
+                        -webkit-text-size-adjust: 100%;
+                        -ms-text-size-adjust: 100%;
+                        font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        border: none;
+                      ">
+                                        <!-- COPY -->
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="
+                          -webkit-text-size-adjust: 100%;
+                          -ms-text-size-adjust: 100%;
+                          font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                          mso-table-lspace: 0pt;
+                          mso-table-rspace: 0pt;
+                          border: none;
+                          border-collapse: collapse !important;
+                        ">
 
-<script>
-    smartech('create', 'ADGMOT35CHFLVDHBJNIG50K968HGC4AU9CK8VRN68EHEH9MQ0RU0');
-    smartech('register', 'ed71c43ad003846d01e0e99be1c64d00');
-    smartech('identify', '');
-</script>
-</script>
-<script>
-    smartech('identify', 'kufy201@gmail.com');
-    smartech('dispatch', 'speak_to_consultant', {
-        "email": "kufy201@gmail.com",
-        "phonenumber": "08065732931",
-        "company": "axon",
-        "duration": "this quater",
-        "location": "lagos"
-    });
-</script>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="border: none; border-color: #ffffff;">
+                                    <td style="
+                        -webkit-text-size-adjust: 100%;
+                        -ms-text-size-adjust: 100%;
+                        font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        border: none;
+                      ">
+                                        <!-- COPY -->
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="
+                          -webkit-text-size-adjust: 100%;
+                          -ms-text-size-adjust: 100%;
+                          font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                          mso-table-lspace: 0pt;
+                          mso-table-rspace: 0pt;
+                          border: none;
+                          border-collapse: collapse !important;
+                        ">
+                                            <tr style="border: none; border-color: #ffffff;">
+                                                <td align="left" style="
+                              -webkit-text-size-adjust: 100%;
+                              -ms-text-size-adjust: 100%;
+                              font-family: Graphik, Verdana, Geneva, Tahoma, sans-serif;
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              border: none;
+                              line-height: 28px;
+                              padding-top: 30px;
+                              color: #000000;
+                            " class="padding">
+                                                    Hi kufre
+                                                </td>
+                                            </tr>
+                                            <tr style="border: none; border-color: #ffffff;">
+                                                <td align="justify" style="
+                              -webkit-text-size-adjust: 100%;
+                              -ms-text-size-adjust: 100%;
+                              font-family: Graphik, Verdana, Geneva, Tahoma, sans-serif;
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              border: none;
+                              line-height: 29px;
+                            " class="padding">
+                                                    You just tried to create a revhaut account using as your email. Please confirm that the email is yours by entering the code below on the email verification page to continue your registration. </td>
+                                            </tr>
+                                            <tr style="border: none; border-color: #ffffff;">
+                                                <td align="justify" style="
+                              -webkit-text-size-adjust: 100%;
+                              -ms-text-size-adjust: 100%;
+                              font-family: Graphik, Verdana, Geneva, Tahoma, sans-serif;
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              border: none;
+                              padding: 20px 0 0 0;
+                              line-height: 29px;
+                              font-size: 25px;
+                              color: #12278c;
+                              font-weight: 500;
+                            " class="padding">
+                                                    909930409
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+      </table>
+          <![endif]-->
+                <hr style="border: 0.6px solid #e6e6e6; margin-top: 45px;" />
+            </td>
+        </tr>
+        <tr style="border: none; border-color: #ffffff;">
+            <td bgcolor="#78081a" align="center" style="
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+            border: none;
+            padding: 30px 0px 20px 0px;
+          ">
+                <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+              <tr>
+                <td align="center" valign="top" width="500">
+          <![endif]-->
+                <!-- UNSUBSCRIBE COPY -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="
+              -webkit-text-size-adjust: 100%;
+              -ms-text-size-adjust: 100%;
+              font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+              mso-table-lspace: 0pt;
+              mso-table-rspace: 0pt;
+              border: none;
+              border-collapse: collapse !important;
+              max-width: 500px;
+            " class="responsive-table">
+                    <tr style="border: none; border-color: #ffffff;">
+                        <td align="center" style="
+                  -webkit-text-size-adjust: 100%;
+                  -ms-text-size-adjust: 100%;
+                  font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                  mso-table-lspace: 0pt;
+                  mso-table-rspace: 0pt;
+                  border: none;
+                  font-size: 10px;
+                  line-height: 20px;
+                  color: #ffffff;
+                ">
+                            <a href="#" target="_blank" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                    color: #ffffff;
+                    font-size: 15px;
+                    text-decoration: none;
+                  ">Our Partners</a>
+                            <span style="
+                    font-family: Arial, sans-serif;
+                    font-size: 15px;
+                    color: #ffffff;
+                  ">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <a href="https://pace.africa/terms-of-use" target="_blank" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                    color: #ffffff;
+                    font-size: 15px;
+                    text-decoration: none;
+                  ">Terms of Use</a>
+                            <span style="
+                    font-family: Arial, sans-serif;
+                    font-size: 15px;
+                    color: #ffffff;
+                  ">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <a href="https://pace.africa/privacy-policy" target="_blank" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                    color: #ffffff;
+                    font-size: 15px;
+                    text-decoration: none;
+                  ">Privacy policy</a>
+                            <span style="
+                    font-family: Arial, sans-serif;
+                    font-size: 15px;
+                    color: #ffffff;
+                  ">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <a href="#" target="_blank" style="
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Graphik,Verdana,Geneva,Tahoma,sans-serif;
+                    color: #ffffff;
+                    font-size: 15px;
+                    text-decoration: none;
+                  ">Resources</a>
+                            <br /><br /> Copyright &copy; 2020 revhaut All rights reserved
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+      </table>
+          <![endif]-->
+            </td>
+        </tr>
+    </table>
+</body>
 
 </html>

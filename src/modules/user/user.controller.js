@@ -6,57 +6,8 @@ class UserController {
     async dashboard(request, response) {
         response.render('users/dashboard', { layout: '_layouts/default' });
     }
-    async registerWeb(request, response) {
-        const locals = {
-            title: 'register',
-        };
-        return response.render('auth/register', {
-            layout: '_layouts/default',
-            locals,
-            csrfToken: request.csrfToken(),
-        });
-    }
-    async registerAccountWeb(request, response) {
-        const locals = {
-            title: 'account registration',
-            scripts: ['<script src="/app/auth/register.js"></script>'],
-        };
-        return response.render('auth/account-register', {
-            layout: '_layouts/auth',
-            locals,
-            csrfToken: request.csrfToken(),
-        });
-    }
-    async loginWeb(request, response) {
-        const locals = {
-            title: 'login',
-            scripts: ['<script src="/vendors/editor/farmingDetails.js"></script>'],
-        };
-        return response.render('auth/login', {
-            layout: '_layouts/auth',
-            locals,
-        });
-    }
-    async postRegisterApi(request, response) {
-        const { body } = request;
-        try {
-            const { errors, data } = schemaValidator(userSchema.createAccountSchema, {
-                ...body,
-            });
-            if (errors) {
-                return HttpStatusCode.INVALID_REQUEST({ response, errors });
-            }
 
-            const { data: result, message } = await UserService.register(data);
-            //await emailService.sendVericationMail(authData);
-            return HttpStatusCode.CREATED({ response, message, data: result });
-        } catch (error) {
-            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
-                response,
-                message: error.message,
-            });
-        }
-    }
+   
     async postLoginApi(request, response) {
         const { body } = request;
         try {

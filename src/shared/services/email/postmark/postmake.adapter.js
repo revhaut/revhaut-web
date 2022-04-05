@@ -8,7 +8,7 @@ class PostMarkMailAdapter {
         if (!is_success) {
             return { is_success, error };
         }
-        return { is_success, data: details };
+        return { is_success, data: details,error:'' };
     }
 }
 

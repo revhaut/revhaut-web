@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="Smart Data  IT Solutions &  Services Template">
     <link href="/assets/images/logo/favicon.png" rel="icon">
+    <meta name="csrf-token" content="<%- csrfToken%>">
     <title>
         <%- locals.title %>
     </title>
@@ -62,10 +63,8 @@
                     <li class="d-none d-xl-block">
                         <a href="/register" class="btn action__btn-contact">Sign Up</a>
                     </li>
-                    <li>
-                        <button class="action__btn action__btn-login open-login-popup">
-                            <i class="icon-user"></i><span>Login</span>
-                        </button>
+                    <li class="nav__item">
+                        <a href="/login" class=" nav__item-link <%- locals.page_name==='login' ? 'active' : '' %>">login </a>
                     </li>
                 </ul>
                 <!-- /.navbar-actions -->

@@ -1,24 +1,76 @@
-const AccountRepository = require('./account.repository');
-const SharedService = require('../../shared/shared.service');
+const accountRepository = require('./account.repository');
+const sharedService = require('../../shared/shared.service');
+const countryService = require('../country/country.service');
+const walletService = require('../wallet/wallet.service');
 const UserType = require('../../shared/utils/usertype.enum');
 const dayjs = require('dayjs');
+const duration = require('dayjs/plugin/duration');
+const emailConfig = require('../../configs/email.config')
+const config = require('../../configs/app.config')
+dayjs.extend(duration);
 class AccountService {
-    async create(requestData) {
-        const data = {
-            email_token: { token: SharedService.generateToken(), created_at: dayjs().format() },
-            ...requestData,
-        };
-        if (data.user_type === UserType.VENDOR) {
-            return await this.vendorRegistration(data);
-        } else if (data.user_type === UserType.AFFILIATE) {
-            return await this.affiliateRegistration(data);
-        } else {}
 
-        const { data: result, is_successful, message } = await AccountRepository.create(data);
-        if (!is_successful) {
-            return { data: {}, message };
+    async createAccount(requestData) {
+        const { email, password, first_name, last_name, user_type } = requestData;
+        const { data: user_exist } = await this.userExist(email);
+        if (user_exist) {
+            const emailData = {
+                to:email,
+                template_id:emailConfig.postmark.templates.registrationVerification,
+                subject:"Account Verification",
+                dynamic_data:{
+                    first_name:user_exist.first_name,
+                    last_name:user_exist.last_name,
+                    email:email,
+                    token: user_exist.email_token.token,
+                }
+            }
+            const {is_success,error,data:result} = await sharedService.sendEmail(emailData);
+            return {is_success:true, message:'request successful'}
+
+            throw new BadRequestException({
+                message: translate(translatekey.ACT_EMAIL_EXIST),
+            });
         }
-        return { data: result };
+        const hashedPassword = await sharedService.hashPassword(password);
+        const token = { token: sharedService.generateToken(), createdAt: dayjs().format() };
+        const revhaut_tag = await sharedService.generateRaenestTag(first_name, last_name);
+        const data = {
+            ...requestData,
+            email: email.trim().toLowerCase(),
+            email_token: token,
+            password: hashedPassword,
+            revhaut_tag,
+        };
+        const { data: newUser } = await sharedService.queryHandler(accountRepository.create( data ));
+        if(newUser.id != ""){
+            const walletData = {
+                currency:'USD',
+                user_id:newUser.id
+            }
+            //create a default USD wallet
+            const userCountry = await countryService.getCountryByCode({country_code:data.country});
+            if(userCountry.name == 'Nigeria'){
+                walletData.currency = 'NGN'
+            }
+            const {data:userWallet} = await sharedService.queryHandler(walletService.createWallet(walletData));
+            const emailData = {
+                to:email,
+                template_id:emailConfig.postmark.templates.registrationVerification,
+                subject:"Account Verification",
+                dynamic_data:{
+                    first_name,
+                    last_name,
+                    token: token.token,
+                }
+            }
+            const {is_success,error,data:result} = await sharedService.sendEmail(emailData);
+            if(!is_success){
+
+            }
+            return {is_success:true, message:'',disttination:'verification'}
+        }
+        return {is_success:false, message:'',disttination:''}
     }
 
     async vendorRegistration(vendorData) {
@@ -63,12 +115,7 @@ class AccountService {
             };
             const { data: user } = await this.sharedService.queryHandler(userRepository.create({ data }));
 
-            //create a default USD wallet
-            const wallet_dto = {
-                default: true,
-                currency: 'USD',
-                type: WalletTypes.FIAT,
-            };
+
 
             return {
                 is_success: true,
@@ -145,18 +192,26 @@ class AccountService {
         return { is_success, message };
     }
 
-    async verifyToken({ token, email_token }) {
+    async verifyToken(data) {
+        const { token, email } = data;
+        const { data: user } = await this.userExist(email);
         let is_success = false;
-        const difference = dayjs.duration(dayjs().diff(dayjs(email_token.createdAt)));
+        const difference = dayjs.duration(dayjs().diff(dayjs(user.email_token.createdAt)));
         if (difference.asHours() < config.tokenLife) {
-            if (token == email_token.token) {
+            if (token == user.email_token.token) {
+                const email_token = {
+                    token:0,
+                    createdAt:dayjs().format()
+                }
+                const {data:userWallet} = await sharedService.queryHandler(accountRepository.update({id:user.id},{email_token}));
+
                 is_success = true;
             }
         }
         return is_success;
     }
     async userExist(email) {
-        return await AccountService
+        return await sharedService.queryHandler(accountRepository.findUnique({email}))
     }
 }
 

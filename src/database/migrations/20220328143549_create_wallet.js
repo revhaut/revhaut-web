@@ -9,15 +9,17 @@ exports.up = function(knex) {
         });
         table.uuid('user_id').notNull();
         table.foreign('user_id').references('id').inTable('users');
-        table.boolean('language_default').defaultTo('en');
-        table.boolean('payment_autopay').defaultTo(false);
-        table.string('payment_fund_source').notNull(); //fiat,usdt
-        table.string('payment_method'); //bank,cypto
+        table.decimal('balance').defaultTo(0.00);
+        table.string('type').defaultTo('fiat'); //fiat,usdt
         table.string('currency').notNull();
+        table.boolean('is_enabled').defaultTo(true);
+        table.boolean('auto_withdraw').defaultTo(false);
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.fn.now());
     });
 };
+
+
 
 /**
  * @param { import("knex").Knex } knex

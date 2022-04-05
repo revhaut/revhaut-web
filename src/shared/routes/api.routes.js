@@ -1,9 +1,9 @@
-//const accountApiRoute = require('../../modules/account/account.api.routes');
+const accountApiRoute = require('../../modules/account/routes/account.api.routes');
 const userApiRoute = require('../../modules/user/routes/user.api.routes');
 const countryApiRoute = require('../../modules/country/routes/country.api.routes');
 
 const routes = async app => {
-    app.use('/api/account', userApiRoute);
+    app.use('/api/account', accountApiRoute);
     app.use('/api/wallet', userApiRoute);
     app.use('/api/product', userApiRoute);
     app.use('/api/profile', userApiRoute);

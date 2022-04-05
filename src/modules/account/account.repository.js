@@ -1,15 +1,19 @@
-const knex = require('../../database');
+const db = require('../../database');
 class AccountRespository {
     async create(data) {
-
+        const returnData = ['*'];
+        const result = await db('users').insert(data).returning(returnData);
+        return result[0];
     }
-    async findOne(email) {
-
+    async findUnique(requestdData) {
+        return await db('users').first(['*']).where(requestdData);
     }
-    async findAll(data) {
 
+    async update(id, data) {
+        return await db('users').where(id).update(data);
     }
-    async update() {}
-    async remove() {}
+    async remove(id, data) {
+        return await db('users').where(id).update(data);
+    }
 }
 module.exports = new AccountRespository();

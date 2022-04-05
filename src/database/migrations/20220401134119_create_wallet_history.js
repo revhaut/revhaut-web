@@ -26,5 +26,5 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable('sale_pages');
+  return knex.schema.dropTable('wallet_histories');
 };

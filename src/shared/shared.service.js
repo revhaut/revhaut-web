@@ -2,7 +2,8 @@
 const bcrypt = require('bcrypt');
 const BadRequestException = require('./exceptions/bad-request.exception');
 const userRepository = require('../modules/user/user.repository');
-const emailService = require('../shared/services/email')
+const emailService = require('../shared/services/email');
+const config = require('../configs/email.config')
 class SharedService {
     //shared service method here
     async isAMatchPassword(password, newPassword) {
@@ -23,17 +24,16 @@ class SharedService {
         return is_success;
     }
 
-    async sendEmail({ to, dynamic_data, template_id, subject }) {
-        //return await EmailClient.sendEmail({ to, dynamic_data, template_id });
-
+    async sendEmail(data) {
+        const {to, dynamic_data, template_id, subject } = data
         const emailData = {
-            from: `${company.company_name}${emailConfig.outlook.senderEmail}`,
-            to: email,
+            to,
             subject,
-            template_id: `${[emailConfig.outlook.templates.accountPasswordResetSuccessful]}`,
+            template_id,
             dynamic_data,
+            from: `${config.outlook.senderEmail}`,
         };
-        sendEmail({ params: emailData });
+        return await emailService({ params: emailData });
     }
 
     generateRandomPassword(length = 15) {
@@ -352,7 +352,7 @@ class SharedService {
         let random_number = this.generateToken().toString();
         random_number = random_number.substring(0, 4);
         const revhaut_tag = `${fstring}${lstring}${random_number}`.toLocaleLowerCase();
-        const { data: tag } = await this.queryHandler(userRepository.findUnique({ revhaut_tag } ));
+        const { data: tag } = await this.queryHandler(userRepository.findFirst({ revhaut_tag } ));
         if (tag) {
             result = this.generateRaenestTag(firstname, lastname);
             return result;
