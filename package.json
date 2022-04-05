@@ -4,18 +4,35 @@
     "private": true,
     "scripts": {
         "start": "node ./src/server.js",
-        "build": ""
+        "dev": "nodemon",
+        "build": "",
+        "mg:up": "npx knex migrate:latest",
+        "mg:down": "npx knex migrate:rollback",
+        "mg:refresh": "npm run mg:down && npm run mg:up"
     },
     "dependencies": {
+        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
         "cookie-parser": "~1.4.4",
+        "country-state-city": "^3.0.1",
+        "csurf": "^1.11.0",
+        "dayjs": "^1.11.0",
         "debug": "~2.6.9",
         "dotenv": "^16.0.0",
         "ejs": "~2.6.1",
         "express": "~4.16.1",
         "express-ejs-layouts": "^2.5.1",
+        "generate-password": "^1.7.0",
         "http-errors": "~1.6.3",
         "joi": "^17.6.0",
+        "knex": "^1.0.4",
+        "libphonenumber-js": "^1.9.50",
         "morgan": "~1.9.1",
-        "npm-run-all": "^4.1.5"
+        "nodemailer": "^6.7.3",
+        "npm-run-all": "^4.1.5",
+        "pg": "^8.7.3"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
     }
 }

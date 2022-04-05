@@ -1,11 +1,15 @@
 const defaultRoutes = require('../../modules/_default/default.routest');
-const affiliateRoute = require('../../modules/affiliate/affiliate.routes');
-const vendorRoute = require('../../modules/vendor/vendor.routes');
+const productRoutes = require('../../modules/product/routes/product.web.routes');
+
 
 const routes = async(app) => {
     app.use('/', defaultRoutes);
-    app.use('/affiliate', affiliateRoute);
-    app.use('/vendor', vendorRoute);
+    app.use('/product', productRoutes);
+    app.use('/setting', productRoutes);
+    app.use('/profile', productRoutes);
+    app.use('/transaction', productRoutes);
+    app.use('/dashboard', productRoutes);
+
 };
 
 module.exports = routes;
