@@ -1,4 +1,12 @@
 require('dotenv').config();
+
+console.log({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: 'revhaut_db',
+  user: 'postgres',
+  password: process.env.DB_PASSWORD,
+});
 module.exports = {
   development: {
     client: 'pg',

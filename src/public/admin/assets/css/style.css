@@ -8560,4 +8560,9 @@ input[type=radio] {
   }
 }
 
+.error{
+    color: #f53a3a;
+    width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */
