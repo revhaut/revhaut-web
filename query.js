@@ -56,3 +56,5 @@ db.from('products')
     console.log(d);
   })
   .catch(err => console.log(err));
+
+//TODO: add transaction channel in migration file for transaction

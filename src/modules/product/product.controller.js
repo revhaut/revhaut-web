@@ -19,6 +19,7 @@ class ProductController {
       csrfToken: request.csrfToken(),
     });
   }
+
   async productListWeb(request, response) {
     const products = await sharedService.queryHandler(ProductRepository.findAll());
     const locals = {
