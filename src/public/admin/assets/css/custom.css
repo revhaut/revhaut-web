@@ -429,17 +429,17 @@ font-size: 15px;
   margin-bottom: 15px;
 }
 
-.switcher > a{
+.switcher > button{
   color: initial;
   display: inline-block;
   margin-right: 10px;
 }
 
-.switcher > a.active{
+.switcher > button.active{
   color: #f3a712;
 }
 
-.switcher > a > i{
+.switcher > button > i{
   font-size: 1.5rem;
 }
 
@@ -528,4 +528,8 @@ font-size: 15px;
 
 .is-sticky .header-dropdown i{
   margin-top: 33px;
+}
+
+.error{
+  color: #f53a3a !important;
 }

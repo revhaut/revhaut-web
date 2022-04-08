@@ -744,3 +744,9 @@ section {
 .service-item .service__title {
     font-size: 1.4rem;
 }
+
+.error{
+    color: #f53a3a;
+    width: 100%;
+    display: block;
+}

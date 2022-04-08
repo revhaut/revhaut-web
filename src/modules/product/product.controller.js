@@ -27,24 +27,24 @@ class ProductController {
         });
     }
     async createProductApi(request, response) {
-      const { body } = request;
-      try {
-          const { errors, data } = schemaValidator(userSchema.createAccountSchema, {
-              ...body,
-          });
-          if (errors) {
-              return HttpStatusCode.INVALID_REQUEST({ response, errors });
-          }
+        const { body } = request;
+        try {
+            const { errors, data } = schemaValidator(userSchema.createAccountSchema, {
+                ...body,
+            });
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ response, errors });
+            }
 
-          //const { data: result, message } = await UserService.register(data);
-          //await emailService.sendVericationMail(authData);
-          return HttpStatusCode.CREATED({ response, message, data: result });
-      } catch (error) {
-          return HttpStatusCode.UNPROCCESSABLE_ENTITY({
-              response,
-              message: error.message,
-          });
-      }
+            //const { data: result, message } = await UserService.register(data);
+            //await emailService.sendVericationMail(authData);
+            return HttpStatusCode.CREATED({ response, message, data: result });
+        } catch (error) {
+            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                response,
+                message: error.message,
+            });
+        }
     }
     async fetchProductApi(request, response) {
         const { body } = request;

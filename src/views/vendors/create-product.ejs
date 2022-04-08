@@ -1,0 +1,254 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" defer></script>
+<section id="breadcrumb">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-header">
+          <h2>Product Marketplace</h2>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Product marketplace</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create Product</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <img src="..." class="rounded mr-2" alt="..." />
+    <strong class="mr-auto">Bootstrap</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+
+<section id="mainContent">
+  <div class="container">
+    <div class="row p-4 section-shadow">
+      <div class="col-12 col-sm-4">
+        <img src="https://revhaut.lappy.ng/admin-dashboard/assets/images/shoes.png" id="product-img" class="img-fluid mb-3 img-rounded" />
+        <input type="file" name="product_img" id="product_image" />
+      </div>
+      <div class="col-12 col-sm-8">
+        <form method="POST" id="form">
+          <div class="form-group">
+            <label for="product_name">Product name</label>
+            <input type="text" id="product_name" name="product_name" placeholder="Enter Product Name" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" required id="description" placeholder="A description of your product"> </textarea>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 form-group">
+              <select class="form-control" name="category" id="category" style="display: none">
+                <option selected value="all">All</option>
+                <% categories.forEach((category)=>{ %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+                <% }) %>
+              </select>
+              <div class="nice-select form-control" tabindex="0">
+                <span class="current">All</span>
+                <ul class="list">
+                  <li data-value="All" class="option selected">All</li>
+                  <% categories.forEach((category)=>{ %>
+                  <li data-value="<%= category.id %>"><%= category.name %></li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <input type="url" name="product_slug" id="product_slug" class="form-control" placeholder="https://youtube.com/designtips" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 form-group">
+              <label for="default_email">Default Access Email</label>
+              <input name="default_email" type="email" class="form-control" id="default_email" placeholder="Default Access Email" />
+              <!-- <select class="form-control select-email" id="default_email" style="display: none">
+                <option selected="">mymail@domain.com</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select> -->
+              <!-- <div class="nice-select form-control" tabindex="0">
+                <span class="current">mymail@domain.com</span>
+                <ul class="list">
+                  <li data-value="mymail@domain.com" class="option selected">mymail@domain.com</li>
+                  <li data-value="Option 1" class="option">Option 1</li>
+                  <li data-value="Option 2" class="option">Option 2</li>
+                  <li data-value="Option 3" class="option">Option 3</li>
+                </ul>
+              </div> -->
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="default_password">Default Access password</label>
+              <input type="text" name="default_password" id="default_password" placeholder="1234" class="form-control" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 form-group">
+              <label for="percentage">Sale percentage assigned to affiliate</label>
+              <input type="text" name="percentage" id="percentage" placeholder="%15" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="amount">Amount</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="amountDropdown" data-toggle="dropdown" aria-expanded="false">
+                    ₦ &nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </span>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="will-change: transform">
+                    <a class="dropdown-item" href="#">$</a>
+                    <a class="dropdown-item" href="#">£</a>
+                  </div>
+                </div>
+                <input type="text" class="form-control" name="amount" placeholder="250,000" name="amount" id="amount" aria-describedby="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <div class="w-50 d-flex justify-content-between align-items-center">
+              <button type="reset" class="text-primary">Cancel</button>
+              <input type="submit" name="submit" class="btn btn-primary" value="Create Product" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<% const token = csrfToken; %>
+<script>
+  $('document').ready(function () {
+    let file;
+    $('#category').niceSelect('update');
+
+    /**display image on front end*/
+    $('#product_image').change(function (e) {
+      const reader = new FileReader();
+      //filter file
+      file = e.target.files[0];
+      if (!['image/png', 'image/jpeg'].includes(file.type)) {
+        alert('File type not supported');
+        return null;
+      }
+
+      //check file size
+      if (file.size > 500000) {
+        alert('File to large');
+        return null;
+      }
+      reader.readAsDataURL(file);
+      reader.addEventListener('load', e => {
+        $('#product-img').attr('src', e.target.result);
+      });
+    });
+
+    //validate form and handle
+    $('#form').validate({
+      rules: {
+        product_name: 'required',
+        // description: 'required',
+        product_slug: {
+          required: true,
+        },
+        default_email: {
+          required: true,
+          // Specify that email should be validated
+          // by the built-in "email" rule
+          email: true,
+        },
+        default_password: {
+          required: true,
+          minlength: 6,
+        },
+        percentage: 'required',
+        amount: 'required',
+        // category: 'required',
+      },
+
+      messages: {
+        product_name: 'Please enter your product  name',
+        // description: 'Please enter a description',
+        default_password: {
+          required: 'Please provide a password',
+          minlength: 'Your password must be at least 5 characters long',
+        },
+        default_email: {
+          required: 'Please enter a valid email address',
+          email: 'value must be a valid email',
+        },
+        amount: 'Please enter a valid amount',
+        product_slug: 'Please enter a valid amount',
+        percentage: 'Please enter a percentage',
+        // category: 'category can not',
+      },
+
+      errorPlacement: function (error, element) {
+        console.log({ error, element });
+        if (error) {
+          error.insertAfter(element);
+        }
+      },
+
+      submitHandler: function (form) {
+        if (!file) {
+          alert('Please select a file to upload');
+          return null;
+        }
+        const category = $('#category').val(),
+          product_name = $('#product_name').val(),
+          description = $('#description').val(),
+          product_slug = $('#product_slug').val(),
+          default_email = $('#default_email').val(),
+          default_password = $('#default_password').val(),
+          percentage = $('#percentage').val(),
+          amount = $('#amount').val();
+
+        $.ajax({
+          url: '/product/create',
+          type: 'POST',
+          headers: {
+            'CSRF-Token': '<%= csrfToken %>', // <-- is the csrf token as a header
+          },
+          data: {
+            category,
+            description,
+            product_slug,
+            default_email,
+            default_password,
+            percentage,
+            product_name,
+            amount,
+          },
+          success: result => {
+            console.log(result);
+          },
+          error: err => {
+            console.log(err.responseJSON);
+          },
+        });
+      },
+    });
+    // $('form').submit(e => {
+    //   const category = $('category').val(),
+    //     product_name = $('product_name').val(),
+    //     description = $('description').val(),
+    //     product_slug = $('product_slug').val(),
+    //     default_email = $('default_email').val(),
+    //     default_password = $('default_password').val(),
+    //     percentage = $('percentage').val(),
+    //     amount = $('amount').val();
+    // });
+  });
+</script>

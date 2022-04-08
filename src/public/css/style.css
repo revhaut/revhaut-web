@@ -7757,4 +7757,10 @@ canvas#highlights {
   transform: scale(1);
 }
 
+.error{
+  color: #f53a3a;
+  width: 100%;
+  display: block;
+}
+
 /*# sourceMappingURL=style.css.map */
