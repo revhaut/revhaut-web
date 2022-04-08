@@ -6,6 +6,10 @@ const webRoute = require('../routes/web.routes');
 const apiRoute = require('../routes/api.routes');
 const expressLayouts = require('express-ejs-layouts');
 const csrf = require('csurf');
+
+const { appLogger } = require('../../configs/logger');
+const morgan = require('morgan');
+
 const middleWare = app => {
   app.use(expressLayouts);
   app.use('/', express.static(path.join(__dirname, '../../public')));
@@ -13,7 +17,8 @@ const middleWare = app => {
   app.set('layouts', path.join(__dirname, '../../views/layouts'));
 
   app.set('view engine', 'ejs');
-  app.use(logger('dev'));
+  app.use(morgan('combined', { stream: appLogger.stream }));
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());

@@ -1,5 +1,15 @@
 const path = require('path');
+const winston = require('winston');
+const { logs } = require('../../configs/logger');
+
 require('dotenv').config({ path: path.join(__dirname, '../../../.env') }); //get env file from server root dri
+
+const logger = winston.createLogger({
+  transports: [new winston.transports.Console()],
+  format: winston.format.prettyPrint(),
+  colorize: true,
+  json: true,
+});
 
 /**
  * @param {import('express').ErrorRequestHandler} err
@@ -14,6 +24,7 @@ module.exports = (err, req, res, next) => {
   if (req.originalUrl.startsWith('/api')) {
     //TODO: implement logger functionality
 
+    logger.error('Server Error: ', err);
     /**handles api errors in development */
     if (process.env.NODE_ENV === 'development') {
       return res.status(err.statusCode).json({
