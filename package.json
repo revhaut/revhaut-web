@@ -11,6 +11,7 @@
         "mg:refresh": "npm run mg:down && npm run mg:up"
     },
     "dependencies": {
+        "@vscode/sqlite3": "^5.0.8",
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "~1.4.4",
@@ -30,7 +31,8 @@
         "morgan": "~1.9.1",
         "nodemailer": "^6.7.3",
         "npm-run-all": "^4.1.5",
-        "pg": "^8.7.3"
+        "pg": "^8.7.3",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "@faker-js/faker": "^6.1.2",

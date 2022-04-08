@@ -1,0 +1,21 @@
+<div class="col-lg-5">
+  <p>TOP SELLING PRODUCTS</p>
+  <div class="column-inner dashboard-rounded">
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th>Product Name</th>
+          <th>Amount</th>
+          <th>No Of Purchases</th>
+        </tr>
+        <% products.slice(0, 6).forEach((product)=>{ %>
+        <tr>
+          <td><%= product.product.name %></td>
+          <td>₦<%= product.product.amount.toLocaleString() %></td>
+          <td>150</td>
+        </tr>
+        <%}) %>
+      </tbody>
+    </table>
+  </div>
+</div>

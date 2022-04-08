@@ -8,7 +8,7 @@ class ProductResponsitory {
   }
 
   findAll() {
-    return db.from('products').select('*');
+    return db.from('products').join('users', 'users.id', 'products.vendor_id').where('products.vendor_id', '59ad23dd-e151-4d4e-a054-154d79845793').select('*');
   }
 
   //FIXIT: move to category controller later
