@@ -7,26 +7,24 @@ class OutLookClient {
     _auth;
     _transporter;
     constructor() {
-
         // initialize the mail transporter
         this._transporter = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
+            host: 'smtp.postmarkapp.com',
             port: 2525,
             auth: {
-              user: "49ce24e8b6cbd8",
-              pass: "847bd6ed40f1d2"
-            }
+                user: 'e5c81dbe-29f5-4480-b1ab-98e21d83f64b',
+                pass: 'e5c81dbe-29f5-4480-b1ab-98e21d83f64b',
+            },
         });
     }
 
     _renderTemplate(data) {
-
         return ejs.renderFile(`${__dirname}/../templates/${data.template_id}.ejs`, data.dynamic_data);
     }
 
     // Send wmail
     async sendEmail(data) {
-        const {subject,from,to} = data
+        const { subject, from, to } = data;
         const emailTemplate = await this._renderTemplate(data);
         this._mailOption = {
             subject,
@@ -45,4 +43,4 @@ class OutLookClient {
     }
 }
 
-module.exports= new OutLookClient();
+module.exports = new OutLookClient();

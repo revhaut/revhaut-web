@@ -32,10 +32,9 @@ const emailConfig = {
         },
     },
     postmark: {
-        senderEmail: process.env.SENDER_EMAIL,
+        senderEmail: process.env.POSTMARK_EMAIL_SENDER,
         templates: {
             registrationVerification: 'account-verification',
-
         },
     },
 };

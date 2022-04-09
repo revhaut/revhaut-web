@@ -16,6 +16,13 @@ const accountSchema = {
         email: Schema.emailSchema.required().label('email'),
         token: Joi.string().required().trim().label('token'),
     }),
+    generateToken: Joi.object({
+        email: Schema.emailSchema.required().label('email'),
+    }),
+    loginSchema: Joi.object({
+        email: Schema.emailSchema.required().label('email'),
+        password: Joi.string().required().label('Password'),
+    }),
 };
 
 module.exports = accountSchema;

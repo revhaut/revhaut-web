@@ -54,6 +54,13 @@ class HttpStatusCodes {
     }
     static NOT_FOUND() {}
     static BAD_REQUEST() {}
-    static INTERNAL_SERVER_ERROR() {}
+    static INTERNAL_SERVER_ERROR() {
+        return {
+            value: 500,
+            writable: false,
+            enumerable: true,
+            configurable: false,
+        };
+    }
 }
 module.exports = HttpStatusCodes;

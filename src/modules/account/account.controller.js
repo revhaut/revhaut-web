@@ -4,6 +4,8 @@ const accountSchema = require('./schema/account.schema');
 const passwordUtil = require('../../shared/utils/generate-password');
 const accountService = require('../account/account.service');
 const countryService = require('../country/country.service');
+const Encryption = require('../../shared/utils/encryption');
+const appConfig = require('../../configs/app.config');
 class AccountController {
     async resetPasswordWeb(request, response) {
         const { body } = request;
@@ -24,6 +26,7 @@ class AccountController {
             });
         }
     }
+
     async verifyAccountWeb(request, response) {
         const locals = {
             title: 'account verification',
@@ -62,7 +65,7 @@ class AccountController {
     async loginWeb(request, response) {
         const locals = {
             title: 'login',
-            scripts: ['<script src="/vendors/editor/farmingDetails.js"></script>'],
+            scripts: ['<script src="/app/auth/login.js"></script>'],
         };
         return response.render('account/login', {
             layout: '_layouts/auth',
@@ -71,16 +74,25 @@ class AccountController {
         });
     }
 
-    async verifyAccountApi(request, response) {
+    async postVerifyAccountApi(request, response) {
         try {
             const { body } = request;
-            console.log(body);
             const { errors, data: token } = schemaValidator(accountSchema.verification, body);
             if (errors) {
                 return HttpStatusCode.INVALID_REQUEST({ res, errors });
             }
-            const { authData } = await accountService.verifyToken(token);
-            res.send(authData);
+            const { is_success, message } = await accountService.verifyToken(token);
+            if (is_success) {
+                return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                    response,
+                    message: message,
+                });
+            }
+            return HttpStatusCode.SUCCESS({
+                response,
+                message: message,
+                data: { url: '/login' },
+            });
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
@@ -88,7 +100,7 @@ class AccountController {
             });
         }
     }
-    async resetPasswordApi(request, response) {
+    async postResetPasswordApi(request, response) {
         try {
             const { query } = request;
             const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
@@ -104,15 +116,21 @@ class AccountController {
             });
         }
     }
-    async loginApi(request, response) {
+    async postLoginApi(request, response) {
         try {
-            const { query } = request;
-            const { errors, data } = schemaValidator(accountSchema.accountVerification, query);
+            const { body } = request;
+            const { errors, data: loginData } = schemaValidator(accountSchema.loginSchema, body);
             if (errors) {
                 return HttpStatusCode.INVALID_REQUEST({ res, errors });
             }
-            const { authData } = await accountService.verifyUserAccount(data);
-            res.send(authData);
+            const { is_success, data, message } = await accountService.userLogin(loginData);
+            if (is_success) {
+                return HttpStatusCode.INVALID_REQUEST({
+                    response,
+                    message,
+                });
+            }
+            this.loginSetUp({ response, user: data });
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
@@ -123,26 +141,79 @@ class AccountController {
     async postRegisterApi(request, response) {
         const { body } = request;
         try {
-            const { errors, data } = schemaValidator(accountSchema.createAccountSchema, {
+            const { errors, data: userData } = schemaValidator(accountSchema.createAccountSchema, {
                 ...body,
             });
             if (errors) {
                 return HttpStatusCode.INVALID_REQUEST({ response, errors });
             }
-            const { is_success, data: result, message } = await AccountService.createAccount(data);
+            const { is_success, data, message, destination } = await accountService.createAccount(userData);
             if (!is_success) {
-                return HttpStatusCode.INVALID_REQUEST({
+                return HttpStatusCode.SUCCESS({
                     response,
-                    message: error.message,
+                    message,
+                    data: { data, url: destination },
                 });
             }
-            return HttpStatusCode.CREATED({ response, message, data: { redirectUrl: '/account/verification' } });
+            return HttpStatusCode.CREATED({ response, message, data: { data, url: '/account/verification' } });
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
                 message: error.message,
             });
         }
+    }
+    async postGenerateVerificationTokenApi(request, response) {
+        const { body } = request;
+        try {
+            const { errors, data } = schemaValidator(accountSchema.generateToken, {
+                ...body,
+            });
+            if (errors) {
+                return HttpStatusCode.INVALID_REQUEST({ response, errors });
+            }
+            const { is_success, data: result, message } = await accountService.createAccount(data);
+            if (!is_success) {
+                return HttpStatusCode.INVALID_REQUEST({
+                    response,
+                    message: error.message,
+                });
+            }
+            return HttpStatusCode.SUCCESS({ response, message, data: { url: '/account/verification' } });
+        } catch (error) {
+            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                response,
+                message: error.message,
+            });
+        }
+    }
+    async loginUser() {
+        const { is_success, message, destination = '', dashboard = {} } = await this.userService.loginUser(loginUserDto);
+        if (is_success && destination == 'dashboard') {
+            this.loginSetUp({ response, user: dashboard.user });
+        }
+        return { data: { destination, dashboard }, message };
+    }
+
+    loginSetUp({ response, user }) {
+        const { id, first_name, last_name, user_type, email } = user;
+        //Generate auth token and save to cookie
+        const authToken = Encryption.encrypt(JSON.stringify({ id, first_name, last_name, email, user_type }));
+        response.setCookie(appConfig.authName, authToken, {
+            ...cookieOption.parseOptions,
+            expires: getCookiesExpires(),
+        });
+        return response;
+    }
+    async logOutUser() {
+        const parseOptions = {
+            ...cookieOption.parseOptions,
+            expires: getCookiesExpires(),
+        };
+        await this.userService.clearCache(currentUser);
+        response.clearCookie(appConfig.authName, parseOptions);
+
+        return {};
     }
 }
 

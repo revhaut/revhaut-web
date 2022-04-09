@@ -44,7 +44,10 @@ $(document).ready(function() {
                 },
                 data: data,
                 success: function(response) {
-                    console.log(response);
+                    if (response.errors) {
+                        alert(response.messsage);
+                    }
+                    window.location.href = response.data.url;
                 },
             });
         },

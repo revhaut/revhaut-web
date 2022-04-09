@@ -12,7 +12,6 @@ class PostMarkClient {
             user: config.username,
             pass: config.password,
         };
-
         // initialize the mail transporter
         this._transporter = nodemailer.createTransport({
             host: config.host,
@@ -49,4 +48,4 @@ class PostMarkClient {
     }
 }
 
-module.exports= new PostMarkClient();
+module.exports = new PostMarkClient();
