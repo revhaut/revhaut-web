@@ -11,8 +11,8 @@ function formatResponse(params) {
 
 class ResponsFormatter {
     static SUCCESS(params) {
-        const { message = 'Request Successful', data = {}, response } = params;
-        const responseDetails = formatResponse({ data, message });
+        const { message = 'Request Successful', data = {}, errors, response } = params;
+        const responseDetails = formatResponse({ data, message, errors });
         return response.status(HttpStatusCode.OK().value).send(responseDetails);
     }
 

@@ -41,4 +41,4 @@ const getCookiesExpires = () => {
     return expires;
 };
 
-export { corsOptions, helmetOptions, cookieOption, getCookiesExpires };
+module.exports = { corsOptions, helmetOptions, cookieOption, getCookiesExpires };

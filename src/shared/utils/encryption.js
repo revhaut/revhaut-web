@@ -1,12 +1,15 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const { promisify } = require('util');
-const { scrypt, createDecipheriv, createCipheriv } = require('crypto');
+const { scrypt, createDecipheriv, createCipheriv, randomBytes } = require('crypto');
 
 const promisedScrypt = promisify(scrypt);
 
 const encrypt = text => {
+    const encryptKey = process.env.ENCRYPTION_KEY;
     const ivLength = 16;
-    const iv = crypto.randomBytes(ivLength);
-    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(process.env.ENCRYPTION_KEY), iv);
+    const iv = randomBytes(ivLength);
+    const cipher = createCipheriv('aes-256-cbc', Buffer.from(encryptKey), iv);
     let encrypted = cipher.update(text);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     return iv.toString('hex') + ':rn' + encrypted.toString('hex');
@@ -17,7 +20,7 @@ const decrypt = text => {
         const textParts = text.split(':rn');
         const iv = Buffer.from(textParts.shift(), 'hex');
         const encryptedText = Buffer.from(textParts.join(':rn'), 'hex');
-        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(process.env.ENCRYPTION_KEY), iv);
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(), iv);
         let decrypted = decipher.update(encryptedText);
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();

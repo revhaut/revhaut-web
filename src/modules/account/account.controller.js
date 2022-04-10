@@ -6,7 +6,9 @@ const accountService = require('../account/account.service');
 const countryService = require('../country/country.service');
 const Encryption = require('../../shared/utils/encryption');
 const appConfig = require('../../configs/app.config');
+const { cookieOption, getCookiesExpires } = require('../../configs/middleware.config');
 class AccountController {
+    constructor() {}
     async resetPasswordWeb(request, response) {
         const { body } = request;
         try {
@@ -83,9 +85,10 @@ class AccountController {
             }
             const { is_success, message } = await accountService.verifyToken(token);
             if (is_success) {
-                return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+                return HttpStatusCode.SUCCESS({
                     response,
                     message: message,
+                    errors: true,
                 });
             }
             return HttpStatusCode.SUCCESS({
@@ -94,8 +97,9 @@ class AccountController {
                 data: { url: '/login' },
             });
         } catch (error) {
-            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+            return HttpStatusCode.SUCCESS({
                 response,
+                errors: true,
                 message: error.message,
             });
         }
@@ -112,6 +116,7 @@ class AccountController {
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
+                errors: true,
                 message: error.message,
             });
         }
@@ -121,19 +126,30 @@ class AccountController {
             const { body } = request;
             const { errors, data: loginData } = schemaValidator(accountSchema.loginSchema, body);
             if (errors) {
-                return HttpStatusCode.INVALID_REQUEST({ res, errors });
+                return HttpStatusCode.INVALID_REQUEST({ response, errors });
             }
             const { is_success, data, message } = await accountService.userLogin(loginData);
-            if (is_success) {
-                return HttpStatusCode.INVALID_REQUEST({
+            if (!is_success) {
+                return HttpStatusCode.SUCCESS({
                     response,
                     message,
+                    errors: true,
+                    data,
                 });
             }
-            this.loginSetUp({ response, user: data });
+
+            const { id, first_name, last_name, user_type, email } = data;
+            //Generate auth token and save to cookie
+            const authToken = Encryption.encrypt(JSON.stringify({ id, first_name, last_name, email, user_type }));
+            response.cookie(appConfig.authName, authToken, {
+                ...cookieOption.parseOptions,
+                expires: getCookiesExpires(),
+            });
+            return response;
         } catch (error) {
-            return HttpStatusCode.UNPROCCESSABLE_ENTITY({
+            return HttpStatusCode.SUCCESS({
                 response,
+                errors: true,
                 message: error.message,
             });
         }
@@ -152,6 +168,7 @@ class AccountController {
                 return HttpStatusCode.SUCCESS({
                     response,
                     message,
+                    errors: true,
                     data: { data, url: destination },
                 });
             }
@@ -159,6 +176,7 @@ class AccountController {
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
+                errors: true,
                 message: error.message,
             });
         }
@@ -176,13 +194,15 @@ class AccountController {
             if (!is_success) {
                 return HttpStatusCode.INVALID_REQUEST({
                     response,
-                    message: error.message,
+                    message,
+                    errors: true,
                 });
             }
             return HttpStatusCode.SUCCESS({ response, message, data: { url: '/account/verification' } });
         } catch (error) {
             return HttpStatusCode.UNPROCCESSABLE_ENTITY({
                 response,
+                errors: true,
                 message: error.message,
             });
         }
@@ -195,7 +215,8 @@ class AccountController {
         return { data: { destination, dashboard }, message };
     }
 
-    loginSetUp({ response, user }) {
+    async loginSetUp(data) {
+        const { user, response } = data;
         const { id, first_name, last_name, user_type, email } = user;
         //Generate auth token and save to cookie
         const authToken = Encryption.encrypt(JSON.stringify({ id, first_name, last_name, email, user_type }));

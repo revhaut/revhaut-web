@@ -64,7 +64,6 @@ class AccountService {
     async verifyToken(data) {
         const { token, email } = data;
         const { data: user } = await this.userExist(email);
-        let is_success = false;
         const difference = dayjs.duration(dayjs().diff(dayjs(user.email_token.createdAt)));
         if (difference.asHours() < config.tokenLife) {
             if (token == user.email_token.token) {
@@ -72,7 +71,7 @@ class AccountService {
                     token: 0,
                     createdAt: dayjs().format(),
                 };
-                await sharedService.queryHandler(accountRepository.update({ id: user.id }, { email_token }));
+                await sharedService.queryHandler(accountRepository.update({ id: user.id }, { email_token, email_confirm: true }));
                 return { is_success: false, message: 'account verify successfully' };
             }
             return { is_success: true, message: 'bad request' };
@@ -110,7 +109,7 @@ class AccountService {
     async userLogin(requestData) {
         const { email, password } = requestData;
         const { data: user_exist } = await this.userExist(email);
-        const isValidPassword = await sharedService.isAMatchPassword(user_exist.password, password);
+        const isValidPassword = await sharedService.isAMatchPassword(password, user_exist.password);
         if (!isValidPassword) {
             const login_attempt = user_exist.login_attempt + 1;
             if (user_exist.login_attemp > 3) {
@@ -120,11 +119,11 @@ class AccountService {
             return { is_success: true, message: 'email or password is not valid' };
         }
         if (!user_exist.email_confirm) {
-            return { is_success: true, message: 'account not verify, kindly verifiy the account ' };
+            return { is_success: false, message: 'account not verify, kindly verifiy the account', data: { url: '/account/verification' } };
         }
         await sharedService.queryHandler(accountRepository.update({ id: user_exist.id }, { login_attempt: 0 }));
         const returnData = { id: user_exist.id, role: user_exist.user_type, firstname: user_exist.first_name };
-        return { is_success: false, message: 'login successful', data: returnData };
+        return { is_success: true, message: 'login successful', data: returnData };
     }
 }
 

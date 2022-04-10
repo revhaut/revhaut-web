@@ -30,10 +30,17 @@ $(document).ready(function() {
                 },
                 data: {...data },
                 success: function(response) {
-                    if (response.errors) {
-                        alert(response.messsage);
+                    const { data, errors, message } = response;
+                    if (errors && data.url == undefined) {
+                        alert(message);
+                        return;
+                    } else if (errors && data.url !== '') {
+                        alert(message);
+                        window.location.href = data.url;
+                        return;
                     }
-                    window.location.href = response.data.url;
+                    alert(message);
+                    window.location.href = data.url;
                 },
             });
         },

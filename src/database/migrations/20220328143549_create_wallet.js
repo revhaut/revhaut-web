@@ -9,7 +9,7 @@ exports.up = function(knex) {
         });
         table.uuid('user_id').notNull();
         table.foreign('user_id').references('id').inTable('users');
-        table.decimal('balance').defaultTo(0.00);
+        table.decimal('balance').defaultTo(0.0);
         table.string('type').defaultTo('fiat'); //fiat,usdt
         table.string('currency').notNull();
         table.boolean('is_enabled').defaultTo(true);
@@ -18,8 +18,6 @@ exports.up = function(knex) {
         table.timestamp('updated_at').defaultTo(knex.fn.now());
     });
 };
-
-
 
 /**
  * @param { import("knex").Knex } knex
