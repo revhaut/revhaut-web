@@ -30,7 +30,7 @@ const affiliateDashboard = async(request, response) => {
     });
 };
 
-export default {
+module.exports = {
     index,
     vendorDashboard,
     affiliateDashboard,

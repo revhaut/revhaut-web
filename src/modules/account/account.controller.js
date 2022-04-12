@@ -28,7 +28,6 @@ class AccountController {
             });
         }
     }
-
     async verifyAccountWeb(request, response) {
         const locals = {
             title: 'account verification',
@@ -41,7 +40,6 @@ class AccountController {
             csrfToken: request.csrfToken(),
         });
     }
-
     async registerWeb(request, response) {
         const locals = {
             title: 'vendor & affiliate registration',
@@ -207,25 +205,7 @@ class AccountController {
             });
         }
     }
-    async loginUser() {
-        const { is_success, message, destination = '', dashboard = {} } = await this.userService.loginUser(loginUserDto);
-        if (is_success && destination == 'dashboard') {
-            this.loginSetUp({ response, user: dashboard.user });
-        }
-        return { data: { destination, dashboard }, message };
-    }
 
-    async loginSetUp(data) {
-        const { user, response } = data;
-        const { id, first_name, last_name, user_type, email } = user;
-        //Generate auth token and save to cookie
-        const authToken = Encryption.encrypt(JSON.stringify({ id, first_name, last_name, email, user_type }));
-        response.setCookie(appConfig.authName, authToken, {
-            ...cookieOption.parseOptions,
-            expires: getCookiesExpires(),
-        });
-        return response;
-    }
     async logOutUser() {
         const parseOptions = {
             ...cookieOption.parseOptions,

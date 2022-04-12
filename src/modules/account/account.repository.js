@@ -8,7 +8,6 @@ class AccountRespository {
     async findUnique(requestdData) {
         return await db('users').first(['*']).where(requestdData);
     }
-
     async update(id, data) {
         return await db('users').where(id).update(data);
     }

@@ -5,7 +5,6 @@ const logger = require('morgan');
 const webRoute = require('../routes/web.routes');
 const apiRoute = require('../routes/api.routes');
 const expressLayouts = require('express-ejs-layouts');
-const rateLimit = require('express-rate-limit');
 const csrf = require('csurf');
 const os = require('os');
 const path = require('path');
@@ -29,21 +28,7 @@ const middleWare = app => {
     app.use(express.urlencoded({ extended: false }));
     app.use(formData.parse({ uploadDir: os.tmpdir(), autoClean: true }));
     app.use(helmet());
-    app.use(rateLimit(middlewareConfig.rateLimit));
     app.use(cookieParser());
-    app.use(
-        session({
-            secret: process.env.ENCRYPTION_KEY,
-            resave: false,
-            saveUninitialized: false,
-            store,
-            cookie: {
-                maxAge: null,
-                httpOnly: false,
-                // secure: app.get('env') !== 'development' || app.get('port') === 443,
-            },
-        })
-    );
     app.use(csrf({ cookie: true }));
     apiRoute(app);
     webRoute(app);
