@@ -73,7 +73,6 @@ class AccountController {
             csrfToken: request.csrfToken(),
         });
     }
-
     async postVerifyAccountApi(request, response) {
         try {
             const { body } = request;
@@ -205,7 +204,6 @@ class AccountController {
             });
         }
     }
-
     async logOutUser() {
         const parseOptions = {
             ...cookieOption.parseOptions,
